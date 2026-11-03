@@ -3,6 +3,7 @@ Feature: Book a housing appointment
   I want to book an appointment with a housing officer online
   So that I do not have to phone or queue at the council office
 
+  # Background runs before every scenario, so each starts with the same free slots
   Background:
     Given the housing office has these free slots:
       | slot             |
@@ -21,6 +22,7 @@ Feature: Book a housing appointment
     When the resident books the slot "2026-11-10 09:30"
     Then the booking is rejected with the message "This slot is no longer available"
 
+  # Scenario Outline runs once per row in Examples (empty, too short, too long, wrong prefix)
   Scenario Outline: Resident enters an invalid housing reference
     Given a resident with housing reference "<reference>"
     When the resident books the slot "2026-11-10 09:00"
