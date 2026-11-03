@@ -34,6 +34,8 @@ class AppointmentBook:
         if error:
             return BookingResult(False, error)
 
+        reference = reference.strip()
+
         if not self.is_available(slot):
             return BookingResult(False, "This slot is no longer available")
 
