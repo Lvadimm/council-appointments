@@ -9,10 +9,16 @@ class BookingResult:
 
 class AppointmentBook:
     def __init__(self, slots):
-        self.slots = {}
-
-    def book(self, reference, slot):
-        raise NotImplementedError("Booking not written yet")
+        # Each slot maps to the housing reference that booked it,
+        # or None while the slot is still free.
+        self.slots = {slot: None for slot in slots}
 
     def is_available(self, slot):
-        raise NotImplementedError("Availability check not written yet")
+        return slot in self.slots and self.slots[slot] is None
+
+    def book(self, reference, slot):
+        if not self.is_available(slot):
+            return BookingResult(False, "This slot is no longer available")
+
+        self.slots[slot] = reference
+        return BookingResult(True, f"Booking confirmed for {slot}")
